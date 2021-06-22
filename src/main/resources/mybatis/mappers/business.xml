@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="business">
+
+	<insert id="insertbusiness" parameterType="com.erp.vo.Business">
+		insert into erp_business
+		(bss_no, bss_title, bss_memo, bss_start_date, bss_end_date, bss_file_name, emp_no, manager_no)
+		values
+		(to_char(sysdate, 'yymm') || '2' || lpad(erp_bss_seq.nextval, 3,0), #{title}, #{memo}, #{startDate}, #{endDate}, #{fileName}, #{empNo}, #{managerNo})
+	</insert>
+	
+	<select id="getAllBusiness" resultType="com.erp.vo.Business">
+		select
+			bss_no				as no,
+			bss_title 			as title, 
+			bss_memo 			as memo, 
+			bss_start_date 		as startDate, 
+			bss_end_date 		as endDate, 
+			bss_file_name 		as fileName,
+			bss_status 			as status,
+			emp_no 				as empNo,
+			manager_no			as managerNo,
+			bss_created_date	as createdDate
+		from erp_business
+	</select>
+	
+	<update id="updateBusiness" parameterType="com.erp.vo.Business">
+		update
+			erp_business
+		set 
+			bss_title = #{title},
+			bss_memo = #{memo},
+			bss_file_name = #{fileName},
+			bss_status = #{status},
+			manager_no =  #{managerNo}
+		where bss_no = #{no}
+	</update>
+	
+	<select id="getAllListByStatus" parameterType="string" resultType="com.erp.vo.Business">
+		select bss_no as no,
+			   bss_title as title,
+			   bss_memo as memo,
+			   bss_start_date as startDate,
+			   bss_end_date as endDate,
+			   bss_file_name as fileName,
+			   bss_status as status,
+			   emp_no as empNo,
+			   manager_no as managerNo,
+			   bss_created_date as createdDate
+		from erp_business
+		where bss_status = #{value}
+	</select>
+	
+	<select id="getBusinessByNo" parameterType="string" resultType="com.erp.vo.Business">
+		select bss_no as no,
+			   bss_title as title,
+			   bss_memo as memo,
+			   bss_start_date as startDate,
+			   bss_end_date as endDate,
+			   bss_file_name as fileName,
+			   bss_status as status,
+			   emp_no as empNo,
+			   manager_no as managerNo,
+			   bss_created_date as createdDate
+		from erp_business
+		where bss_no = #{value}
+	</select>
+</mapper>
