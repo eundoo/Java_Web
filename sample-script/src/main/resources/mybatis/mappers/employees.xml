@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="employees">
+
+	<select id="getEmployeesByDepartmentId" parameterType="int" resultType="com.sample.vo.Employee">
+		select
+			employee_id as id,
+			first_name as firstName,
+			last_name as lastName,
+			phone_number as phone,
+			email,
+			jod_id as jobId,
+			salary,
+			commission_pct as commissionPct
+		from employees
+		where department_id = #{value}
+	</select>		
+</mapper>
