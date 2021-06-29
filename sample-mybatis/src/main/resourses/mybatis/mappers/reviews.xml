@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="reviews">
+
+	<insert id="insertReview" parameterType="com.sample.vo.Review">
+		insert into sample_product_reviews
+		(review_no, review_title, review_content, product_no, user_id)
+		values
+		(review_seq.nextval, #{title}, #{content}, #{productNo}, #{userId})
+	</insert>
+	
+	<delete id="deleteReview" parameterType="int">
+		delete from sample_product_reviews
+		where review_no = #{value}
+	</delete>
+
+	<select id="getReviewsByProductNo" parameterType="int" resultType="com.sample.vo.Review">
+		select review_no 		as no,
+			review_title 		as title,
+			review_content 		as content,
+			product_no 			as productNo,
+			user_id 			as userId,
+			review_created_date as createdDate
+		from
+			sample_product_reviews
+		where
+			product_no = #{value}
+		order by
+			review_no asc
+	</select>
+
+	<select id="getReviewByNo" parameterType="int" resultType="com.sample.vo.Review">
+		select review_no 		as no,
+			review_title 		as title,
+			review_content 		as content,
+			product_no 			as productNo,
+			user_id 			as userId,
+			review_created_date as createdDate
+		from
+			sample_product_reviews
+		where
+			review_no = #{value}
+	</select>	
+	
+</mapper>
+
+
+
+
+
+

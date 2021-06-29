@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="products">
+
+	<insert id="insertProduct" parameterType="com.sample.vo.Product">
+		insert into sample_products
+		(product_no, product_name, product_maker, product_category, product_price, product_discount_price)
+		values
+		(product_seq.nextval, #{name}, #{maker}, #{category}, #{price}, #{discountPrice})
+	</insert>
+	
+	<delete id="deleteProduct" parameterType="int">
+		delete from sample_products
+		where product_no = #{value}
+	</delete>
+	
+	<update id="updateProduct" parameterType="com.sample.vo.Product">
+		update sample_products
+		set
+			product_name 			= #{name},
+			product_maker 			= #{maker},
+			product_category 		= #{category},
+			product_price 			= #{price},
+			product_discount_price 	= #{discountPrice},
+			product_stock 			= #{stock},
+			product_sold_out 		= #{soldOut},
+			product_review_cnt		= #{reviewCnt}
+		where product_no = #{no}
+	</update>
+	
+	<select id="getProducts" parameterType="map" resultType="com.sample.vo.Product">
+		select product_no 				as no, 
+				product_name 			as name, 
+				product_maker 			as maker, 
+				product_category 		as category, 
+		       	product_price 			as price, 
+		       	product_discount_price 	as discountPrice, 
+		       	product_stock 			as stock,
+		       	product_sold_out 		as soldOut, 
+		       	product_created_date 	as createdDate,
+		       	product_review_cnt		as reviewCnt
+		from (select row_number() over (order by A.product_no desc) row_no, A.*
+		      from sample_products A)
+		where row_no between #{beginIndex} and #{endIndex}
+		order by product_no desc
+	</select>
+	
+	<select id="getRowsCount" resultType="int">
+		select count(*)
+		from sample_products
+	</select>
+	
+	<select id="getProductByNo" parameterType="int" resultType="com.sample.vo.Product">
+		select product_no 				as no, 
+				product_name 			as name, 
+				product_maker 			as maker, 
+				product_category 		as category, 
+		       	product_price 			as price, 
+		       	product_discount_price 	as discountPrice, 
+		       	product_stock 			as stock,
+		       	product_sold_out 		as soldOut, 
+		       	product_created_date 	as createdDate,
+		       	product_review_cnt		as reviewCnt
+		from sample_products
+		where product_no = #{value}
+	</select>
+	
+	
+	<select id="getProductsByName" parameterType="string" resultType="com.sample.vo.Product">
+		select product_no 				as no, 
+				product_name 			as name, 
+				product_maker 			as maker, 
+				product_category 		as category, 
+		       	product_price 			as price, 
+		       	product_discount_price 	as discountPrice, 
+		       	product_stock 			as stock,
+		       	product_sold_out 		as soldOut, 
+		       	product_created_date 	as createdDate,
+		       	product_review_cnt		as reviewCnt
+		from sample_products
+		where product_name like '%' || #{value} || '%'
+	</select>
+</mapper>

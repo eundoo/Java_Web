@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  
+<configuration>
+
+	<!-- 이거 셋팅 설정이 아래 콘솔에 클릭할 때마다 나오게 하는거 설정하는거야 -->
+	<settings>		
+		<setting name="jdbcTypeForNull" value="NULL"/>
+
+		<setting name="logImpl" value="STDOUT_LOGGING"/>
+	</settings>
+
+	<!-- 데이터베이스 연결정보 설정 -->
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="oracle.jdbc.OracleDriver" />
+				<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
+				<property name="username" value="hr" />
+				<property name="password" value="zxcv1234" />
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<!-- 사용자정의 매퍼파일 등록 -->
+	<mappers>
+		<mapper resource="mybatis/mappers/reviews.xml"/>
+		<mapper resource="mybatis/mappers/cartItems.xml"/>
+		<mapper resource="mybatis/mappers/products.xml"/>
+		<mapper resource="mybatis/mappers/users.xml"/>	
+	</mappers>
+</configuration>
