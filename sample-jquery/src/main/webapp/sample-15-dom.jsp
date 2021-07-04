@@ -29,9 +29,6 @@
 	$("button:eq(1)").toggleClass("disabled")
 	hasDisabledClass = $("button:eq(1)").hasClass("disabled")
 	console.log("disabled가 포함되어 있는가?",hasDisabledClass)
-	
-	
-	
 </script>
 </body>
 </html>

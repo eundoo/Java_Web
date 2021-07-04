@@ -53,6 +53,7 @@
 					<td>1개</td>
 					<td>
 						<a href="order?productNo=10001" class="btn btn-primary btn-sm">구매</a>
+						<!-- data-어쩌고 이거는 값을 읽어온다.(10003을 읽어옴) -->
 						<button class="btn btn-warning btn-sm" data-item-no="10003">삭제</button>
 					</td>
 				</tr>
@@ -60,71 +61,70 @@
 		</table>
 		<div class="mt-3">
 			<button class="btn btn-secondary btn-sm" id="btn-remove-all-row">전체 삭제</button>
-			<button class="btn btn-secondary btn-sm" id="btn remove-checked-row">선택 삭제</button>
+			<button class="btn btn-secondary btn-sm" id="btn-remove-checked-row">선택 삭제</button>
 		</div>
 	</div>
 </div>
 <script type="text/javascript">
-//$(function()안에 작성하는것이 좋다. 왜냐면 다른 라이브러와 변수이름이 겹칠 우려가 없다.)
 $(function() {
 	//페이지 로딩시 장바구니 테이블의 모든 체크박스를 체크된 상태로 설정하기
-	$('#table-cart-items :checkbox').prop('checked', true)
+	$('#table-cart-items :checkbox').prop('checked',true)
 	
 	//전체 삭제
 	$('#btn-remove-all-row').click(function() {
 		$('#table-cart-items tbody').empty()
-		$('#checkbox-all-selected').prop('checked', false)
+		$('#checkbox-all-selected').prop('checked',false)
 	})
-	
 	//선택 삭제
 	$('#btn-remove-checked-row').click(function() {
 		$('#table-cart-items tbody tr:has(:checked)').remove()
-		$('#checkbox-all-selected').prop('checked', false)
+		$('#checkbox-all-selected').prop('checked',false)
+
 	})
-	
 	//전체 선택/해제 처리하기
 	$('#checkbox-all-selected').change(function() {
-		var isCheckted = $(this).prop('checkted')
-		//#table-cart-items안에 tbody안에 모든checkbox의 checked의 속성을 isCheckted의 속성과 같게한다.
-		//얘는 thead안에있네? tbody안에있네? 이런 것들을 잘 생각해야됨
+		var isChecked = $(this).prop('checked')
+
 		$('#table-cart-items tbody :checkbox').prop('checked', isChecked)
 	})
-	//아이템의 체크박스를 선택/해제할 때 자동으로 전체선택/해제 버튼에 반영하기
+	
+	//아이템의 체크박스를 선택/해제 할 때 전체 선택/해제 버튼에 반영하기
 	$('#table-cart-items tbody :checkbox').change(function() {
-		
-		changeAllcheckedCheckbox()
+		changeAllCheckedCheckbox()
 	})
 	
 	//삭제버튼 클릭시 해당 행을 삭제하기
 	$('#table-cart-items tbody .btn-warning').click(function() {
-		//클릭한 버튼의 this가 들어있다 data-item-no를 -> data('item-no')로 읽어올 수 있다.
+		//data읽어오기 .data(data-이후에 이름)
 		var itemNo = $(this).data('item-no')
-		//부모 자식으로 this써서 할려면 id는 필요없다. -> 다른 방법
+		//결과적으로 row-10003이런식으로 되는거야 위에서 itemNo로 번호 10003을 받아오니까
 		$('#row-' + itemNo).remove()
 		
-		changeAllcheckedCheckbox()
+		changeAllCheckedCheckbox()
 	})
 	
-	//총 체크박스의 갯수와 체크된 체크박스의 갯수를 비교해서 전체 선택/해체 체크박스의 상태를 변경하는 함수
-	function changeAllcheckedCheckbox() {
+	//총 체크박스의 갯수와 체크된 체크박스의 갯수를 비교해서 전체 선택/해제 체크박스의 상태를 변경 하는 함수
+	//함수가 중복 될 것 같으니까 이렇게 아래로 잘라내서 함수명을 호출하게 바꾼다~!~!~!여기 중요함*******
+	function changeAllCheckedCheckbox() {
 		//체크박스의 갯수를 조회한다.
-		var checkboxAllCount = $('#table-cart-items tbody :checkbox').length
-		//체크박스가  하나도 없으면 전체 선택/해제 체크박스는 해제상태로 지정하고, 함수실행을 종료한다.
+		var checkboxAllCount = $("#table-cart-items tbody :checkbox").length;
+		//체크박스가 하나도 없으면 전체 선택/해제 체크박스는 해제상태로 지정하고, 함수실행을 종료한다.
 		if(checkboxAllCount == 0) {
 			$('#checkbox-all-selected').prop('checked', false)
 			return
 		}
-		
 		//체크박스 중에서 체크된 체크박스의 갯수를 조회한다.
-		//checkbox에서 checked된것만 가져와라
 		var checkedCheckboxCount = $('#table-cart-items tbody :checkbox:checked').length
-		//전체 체크박스의 갯수와 선택된 체크박스의 갯수가 다르면 전체 선택/해제 체크박스를 해제된 상태로 변경
-		if (checkboxAllCount != checkedCheckboxCount) {ㄴ
+		
+		//체크박스의 갯수와 선택된 체크박스의 갯수를 비교해서
+		//전체 선택/해제 체크박스의 체크상태를 변경한다.
+		if(checkboxAllCount != checkedCheckboxCount) {
 			$('#checkbox-all-selected').prop('checked', false)
 		} else {
 			$('#checkbox-all-selected').prop('checked', true)
 		}
 	}
-})</script>
+})
+</script>
 </body>
 </html>

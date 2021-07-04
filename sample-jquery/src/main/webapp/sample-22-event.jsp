@@ -12,6 +12,7 @@
 </head>
 <body>
 <div class="container">
+<!-- 2:38:00 -->
 	<h1>onsubmit 이벤트 처리</h1>
 	<%--
 		onsubmit 이벤트는 <form>태그에서 발생하는 이벤트이다.

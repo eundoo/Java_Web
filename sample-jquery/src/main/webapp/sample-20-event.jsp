@@ -17,11 +17,11 @@
 	<div id="box-1">
 		<form>
 			<div class="form-group">
-				<label>경력시힝</label>
+				<label>입사구분</label>
 				<select class="form-control" name="career" id="combobox-career">
 					<option value="" selected disabled>선택하세요</option>
 					<option value="N">신입</option>
-					<option valaue="Y">경력직</option>
+					<option value="Y">경력직</option>
 				</select>
 			</div>
 			<div class="form-group" id="box-worked">
@@ -32,14 +32,14 @@
 	</div>
 </div>
 <script type="text/javascript">
-	$(function() {
+	$(function() {	//페이지가 로딩 되자마자 바로 실행~!~!~!
 		//경력사항 입력란을 화면에 표시되지 않게 한다.
 		$('#box-worked').hide()
 		
-		//입사구분 입력란의 select박스의 선택된 옵션이 변경될 때 마다 onchange 이벤트 발생
-		//onchange이벤트 발생시 실행될 이벤트핸들러 함수를 jQuery change()함수에 전달하기
+		//입사구분 입력란의 select박스의 선택된 옵션이 변경될 때마다 onchange이벤트 발생
+		//onchange이벤트 발생시 실행될 이벤트 핸들러 함수를 jQuery의 change()함수에 전달하기
+		//신입엥서 신입을 누를 경우 경력직에서 경력직을 누를경우는 변화가 없어서 바뀌는거 없음
 		$('#combobox-career').change(function() {
-			//오류나거나 실행안되면 console.log부터 찍어보기
 			var careerValue = $(this).val()
 			if(careerValue == 'Y') {
 				$('#box-worked').show()
