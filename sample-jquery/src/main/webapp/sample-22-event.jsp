@@ -42,20 +42,21 @@
 			</form>
 		</div>
 	</div>
-</div>
+</div> 
 <script type="text/javascript">
 $(function() {
-	//form에서 onsubmit이벤트 발생시 실행된다.
+	//form에서 onsubmit 이벤트 발생시 실행된다.
 	//폼 입력값의 유효성을 검사한다.
-	$('#form-login').submit(function() {
-		if(!$.trim($('#user-id').val())) {
-			alert('아이디는 필수 입력 값 입니다.')
-			$('#user-id').focus()
+	$("#form-login").submit(function() {
+		// $이거 자체를 파라미터로 보는듯
+		if($.trim($("#user-id").val())) {
+			alert("아이디는 필수 입력 값 입니다.")
+			$("#user-id").focus()
 			return false
 		}
-		if(!$.trim($('#user-pwd').val())) {
-			alert('비밀번호는 필수 입력 값 입니다.')
-			$('#user-pwd').focus()
+		if(!$.trim($("#user-pwd").val())) {
+			alert("비밀번호는 필수 입력 값 입니다.")
+			$("#user-pwd").focus()
 			return false
 		}
 		return true
